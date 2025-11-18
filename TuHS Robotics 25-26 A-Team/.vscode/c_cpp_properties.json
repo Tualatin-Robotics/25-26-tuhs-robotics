@@ -4,7 +4,6 @@
       "name": "PROS Project",
       "includePath": [
         "${workspaceFolder}/**",
-        "/Users/benjamin/Documents/GitHub/25-26-tuhs-robotics/TuHS Robotics 25-26 A-Team/include",
         "/home/kol/Documents/Vex Robotics/2026/25-26-tuhs-robotics/TuHS Robotics 25-26 A-Team/include"
       ],
       "defines": [
