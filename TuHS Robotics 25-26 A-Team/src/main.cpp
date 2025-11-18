@@ -33,7 +33,7 @@ void competition_initialize() {}
 
 void autonomous() {
 	theFile.open(REPLAY_FILE, std::ios_base::in);
-	while(true) {right_front
+	while(true) {
 		replayController.updateFrame(false);
 		drive(replayController);
 		pros::delay(20);
