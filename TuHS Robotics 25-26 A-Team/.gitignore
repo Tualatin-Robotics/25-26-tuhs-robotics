@@ -11,6 +11,7 @@ bin/
 .vscode/
 .cache/
 compile_commands.json
+c_cpp_properties.json
 temp.log
 temp.errors
 *.ini
