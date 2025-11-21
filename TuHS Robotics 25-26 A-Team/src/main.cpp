@@ -9,18 +9,18 @@ ReplayController replayController(REPLAY_FILE);
 
 // Lift motors
 float LIFT_MAX_SPEED = 127;
-pros::Motor bottom(); // Full motor
-pros::Motor middle(); // Half motor
-pros::Motor top(); // Half motor
+pros::Motor bottom(1); // Full motor
+pros::Motor middle(11); // Half motor
+pros::Motor top(20); // Half motor
 int DRIVE_MAX_SPEED = 100;
 
 //MOTOR DEFINITIONS
-pros::Motor right_front(1, true);
-pros::Motor right_middle(2, true);
-pros::Motor right_back(3, true);
-pros::Motor left_front(11);
-pros::Motor left_middle(19);
-pros::Motor left_back(20);
+pros::Motor right_front(8);
+pros::Motor right_middle(9);
+pros::Motor right_back(10);
+pros::Motor left_front(3);
+pros::Motor left_middle(4);
+pros::Motor left_back(5);
 
 
 
@@ -36,24 +36,10 @@ void disabled() {}
 void competition_initialize() {}
 
 
-void autonomous() {
-	theFile.open(REPLAY_FILE, std::ios_base::in);
-	while(true) {
-		replayController.updateFrame(false);
-		drive(replayController);
-		pros::delay(20);
-		//pros::delay(20-pros::millis()%20);
-	}
-	theFile.close();
-}
 
 
-void opcontrol() {
-	while (true) {
-		drive(playerController);
-		pros::delay(20);
-	}
-}
+
+
 
 
 void drive(auto master){
@@ -74,12 +60,12 @@ void drive(auto master){
 	}
 	else if(r1){// Up and out
 		bottom.move(LIFT_MAX_SPEED);
-		middle.move(LIFT_MAX_SPEED * 0.5);
-		top.move(-LIFT_MAX_SPEED * 0.5);
+		middle.move(LIFT_MAX_SPEED * -0.5);
+		//top.move(-LIFT_MAX_SPEED * 0.5);
 	}
 	else if(r2){// Down and into basket
-		bottom.move(-LIFT_MAX_SPEED);
-		middle.move(-LIFT_MAX_SPEED * 0.5);
+		bottom.move(LIFT_MAX_SPEED);
+		middle.move(LIFT_MAX_SPEED * 0.5);
 		top.move(LIFT_MAX_SPEED * 0.5);
 	}
 	else{
@@ -87,11 +73,12 @@ void drive(auto master){
 		middle.move(0);
 		top.move(0);
 	}
+
 	int left_joystick = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
 	int right_joystick = master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
 	int right_speed = right_joystick * (DRIVE_MAX_SPEED / 127.0);
-	int left_speed = left_joystick * (DRIVE_MAX_SPEED / 127.0);
+	int left_speed = -left_joystick * (DRIVE_MAX_SPEED / 127.0);
 
 	right_front.move(right_speed);
 	right_middle.move(right_speed);
@@ -100,4 +87,22 @@ void drive(auto master){
 	left_front.move(left_speed);
 	left_middle.move(left_speed);
 	left_back.move(left_speed);
+}
+
+void opcontrol() {
+	while (true) {
+		drive(playerController);
+		pros::delay(20);
+	}
+}
+
+void autonomous() {
+	theFile.open(REPLAY_FILE, std::ios_base::in);
+	while(true) {
+		replayController.updateFrame(false);
+		drive(replayController);
+		pros::delay(20);
+		//pros::delay(20-pros::millis()%20);
+	}
+	theFile.close();
 }
