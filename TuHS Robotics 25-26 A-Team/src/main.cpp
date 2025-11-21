@@ -2,7 +2,7 @@
 #include "main.h"
 #include "replay.h"
 
-const string REPLAY_FILE = "/usd/a_team_auton_25_26.txt";
+string REPLAY_FILE = "/usd/a_team_auton_25_26.txt";
 
 pros::Controller playerController(pros::E_CONTROLLER_MASTER);
 ReplayController replayController(REPLAY_FILE);
@@ -36,12 +36,6 @@ void disabled() {}
 void competition_initialize() {}
 
 
-
-
-
-
-
-
 void drive(auto master){
 	bool l1 = master.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
 	bool l2 = master.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
@@ -58,12 +52,12 @@ void drive(auto master){
 		middle.move(-LIFT_MAX_SPEED * 0.5);
 		top.move(0);
 	}
-	else if(r1){// Up and out
+	else if(r2){// Up and out
 		bottom.move(LIFT_MAX_SPEED);
 		middle.move(LIFT_MAX_SPEED * -0.5);
-		//top.move(-LIFT_MAX_SPEED * 0.5);
+		top.move(0);
 	}
-	else if(r2){// Down and into basket
+	else if(r1){// Down and into basket
 		bottom.move(LIFT_MAX_SPEED);
 		middle.move(LIFT_MAX_SPEED * 0.5);
 		top.move(LIFT_MAX_SPEED * 0.5);
@@ -92,8 +86,11 @@ void drive(auto master){
 void opcontrol() {
 	while (true) {
 		drive(playerController);
+		
+		replayController.record(playerController, theFile);
 		pros::delay(20);
 	}
+	theFile.close();
 }
 
 void autonomous() {

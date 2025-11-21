@@ -82,6 +82,7 @@ class ReplayController{
 	}
 
 	void updateFrame(bool optimized = false){
+	pros::lcd::set_text(1, "Playing Back!");
 		frame++;
 		char comma;
 		for(int i = 0; i < 16; i++){
@@ -112,7 +113,7 @@ class ReplayController{
 				theFile.close();
 				cout << "Recording Stopped!";
 				is_recording_auton = false;
-				initialize();
+				//initialize();
 				pros::delay(1000);
 			}
 		}
@@ -124,8 +125,9 @@ class ReplayController{
 				pros::delay(1000);
 				theFile.open(fileName, std::ios_base::out);
 				cout << "Recording!";
+				pros::lcd::set_text(1, "Recording!");
 				is_recording_auton = true;
-				autonomous();
+				//autonomous();
 			}
 		}
 	}
