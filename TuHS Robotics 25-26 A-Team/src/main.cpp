@@ -22,11 +22,18 @@ pros::Motor left_front(3);
 pros::Motor left_middle(4);
 pros::Motor left_back(5);
 
+int direction = 1;
+bool backwardsPressed = false;
 
 
 void initialize() {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Better a witty fool than a foolish wit!");
+	pros::lcd::set_text(1, "Shall I compare thee to a summer's day?");
+	pros::lcd::set_text(2, "Thou art more lovely and more temperate");
+	pros::lcd::set_text(3, "And the rough winds shake");
+	pros::lcd::set_text(4, "The darling buds of May.");
+	pros::lcd::set_text(5, "And summer's lease");
+	pros::lcd::set_text(6, "Hath all too short a date.");
 }
 
 
@@ -45,7 +52,7 @@ void drive(auto master){
 	if(l1){// All the way up
 		bottom.move(LIFT_MAX_SPEED);
 		middle.move(LIFT_MAX_SPEED * 0.5);
-		top.move(0);
+		top.move(-LIFT_MAX_SPEED * 0.5);
 	}
 	else if(l2){// All the way down
 		bottom.move(-LIFT_MAX_SPEED);
@@ -68,11 +75,28 @@ void drive(auto master){
 		top.move(0);
 	}
 
+	
+	
+	if(backwardsPressed != master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
+		backwardsPressed = master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+		if(backwardsPressed && !master.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
+			direction *= -1;
+		}
+	}
+
 	int left_joystick = master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
 	int right_joystick = master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
+	float right_speed = 0;
+	float left_speed = 0;
 
-	int right_speed = right_joystick * (DRIVE_MAX_SPEED / 127.0);
-	int left_speed = -left_joystick * (DRIVE_MAX_SPEED / 127.0);
+	if(direction == 1){
+		right_speed = right_joystick * (DRIVE_MAX_SPEED / 127.0);
+		left_speed = -left_joystick * (DRIVE_MAX_SPEED / 127.0);
+	}
+	else if(direction == -1){
+		right_speed = -left_joystick * (DRIVE_MAX_SPEED / 127.0);
+		left_speed = right_joystick * (DRIVE_MAX_SPEED / 127.0);
+	}
 
 	right_front.move(right_speed);
 	right_middle.move(right_speed);
@@ -88,7 +112,8 @@ void opcontrol() {
 		drive(playerController);
 		
 		replayController.record(playerController, theFile);
-		pros::delay(20);
+		//pros::delay(20);
+		pros::delay(20 - pros::millis() % 20);
 	}
 	theFile.close();
 }
@@ -98,8 +123,8 @@ void autonomous() {
 	while(true) {
 		replayController.updateFrame(false);
 		drive(replayController);
-		pros::delay(20);
-		//pros::delay(20-pros::millis()%20);
+		//pros::delay(20);
+		pros::delay(20 - pros::millis() % 20);
 	}
 	theFile.close();
 }
