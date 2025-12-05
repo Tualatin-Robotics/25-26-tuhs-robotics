@@ -29,13 +29,12 @@ void drive(){
 }
 
 void drive_replay(){
-	vector<long> values = updateFrame();
+	vector<int> values = updateFrame();
 	right_front.move(values[0]);
 	right_back.move(values[1]);
 	left_front.move(values[2]);
 	left_back.move(values[3]);
 }
-
 
 void initialize() {
 	pros::lcd::initialize();
@@ -59,7 +58,7 @@ void autonomous() {
 void opcontrol() {
 	openFile();
 	while (true) {
-		vector<long> values = {
+		vector<int> values = {
 			right_front.get_voltage(),
 			right_back.get_voltage(),
 			left_front.get_voltage(),

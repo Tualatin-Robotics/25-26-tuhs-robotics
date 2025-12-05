@@ -9,7 +9,7 @@ bool isRecording = false;
 int frame = 0;
 
 
-void logMotorStates(vector<long> values){
+void logMotorStates(vector<int> values){
 
     for(int i = 0; i < values.size(); i++){
         theFile << values[i] << " , ";
@@ -19,13 +19,13 @@ void logMotorStates(vector<long> values){
 
 
 
-void record(pros::Controller master, vector<long> values){
+void record(pros::Controller master, vector<int> values){
     // recordButtonPressed = (
     //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
     //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
     //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
     //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)
-    // );
+    // );fl, fr, bl, br}
 
     // if(recordButtonPressed != (
     //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
@@ -37,8 +37,8 @@ void record(pros::Controller master, vector<long> values){
     //         master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
     //         master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
     //         master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
-    //         master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)
-    //     );
+    //         master.get_digital(profl, fr, bl, br}s::E_CONTROLLER_DIGITAL_DOWN)
+    //     );fl, fr, blfl, fr, bl, br}, br}
     
 	// 	if(recordButtonPressed){
 	// 		isRecording = !isRecording;
@@ -61,13 +61,20 @@ void closeFile() {
     theFile.close();
 }
 
-vector<long> updateFrame(){
+vector<int> updateFrame() {
     frame++;
-    vector<long> values;
+    int fl;
+    int fr;
+    int bl;
+    int br;
     char comma;
-    for(int i = 0; i < 4; i++){
-        theFile >> values[i];
-        theFile >> comma;
-    }
-    return values;
+    theFile >> fl;
+    theFile >> comma;
+    theFile >> fr;
+    theFile >> comma;
+    theFile >> bl;
+    theFile >> comma;
+    theFile >> br;
+    theFile >> comma;
+    return vector<int>{fr, br, fl, bl};
 }
