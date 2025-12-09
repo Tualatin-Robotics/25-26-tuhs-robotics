@@ -10,8 +10,6 @@ pros::Motor right_back(20);
 pros::Motor left_front(9);
 pros::Motor left_back(10);
 
-//string REPLAY_FILE = "/usd/test_motor_replay.txt";
-
 
 void drive(){
 
@@ -46,17 +44,18 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-	//openFile();
 	theFile.open(fileName, std::ios::in);
+	pros::lcd::set_text(1, "Auton started!");
 	while (true) {
 		drive_replay();
 		pros::delay(20);
 	}
-	closeFile();
+	theFile.close();
 }
 
 void opcontrol() {
-	openFile();
+	pros::lcd::set_text(1, "Opcontrol started! Go Wolves!");
+
 	while (true) {
 		vector<int> values = {
 			right_front.get_voltage(),
@@ -67,12 +66,8 @@ void opcontrol() {
 		drive();
 		record(master, values);
 
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
-			break;
-		}
-
 		pros::delay(20);
 	}
-	pros::lcd::set_text(1, "End of Opcontrol");
-	closeFile();
+
+	pros::lcd::set_text(1, "End of Opcontrol :D");
 }

@@ -2,8 +2,9 @@
 #include <vector>
 fstream theFile;
 
-string fileName = "/usd/TEST_02.txt";
+string fileName = "/usd/AUTON25-26.txt";
 bool recordButtonPressed = false;
+bool recordButtonLastState = false;
 bool isRecording = false;
 
 int frame = 0;
@@ -20,45 +21,30 @@ void logMotorStates(vector<int> values){
 
 
 void record(pros::Controller master, vector<int> values){
-    // recordButtonPressed = (
-    //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
-    //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
-    //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
-    //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)
-    // );fl, fr, bl, br}
+    recordButtonPressed = (
+        master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
+        master.get_digital(pros::E_CONTROLLER_DIGITAL_UP) &&
+        master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) &&
+        master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)
+    );
 
-    // if(recordButtonPressed != (
-    //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
-    //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
-    //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
-    //     master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)
-    // )){
-    //     recordButtonPressed = (
-    //         master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
-    //         master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
-    //         master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
-    //         master.get_digital(profl, fr, bl, br}s::E_CONTROLLER_DIGITAL_DOWN)
-    //     );fl, fr, blfl, fr, bl, br}, br}
-    
-	// 	if(recordButtonPressed){
-	// 		isRecording = !isRecording;
-	// 	}
-    //     if(isRecording){
-    //         theFile.open(fileName, std::ios_base::out);
-    //     }
-	// }
+    if (recordButtonPressed == false && recordButtonLastState == true) {
+        if (isRecording) {
+            isRecording = false;
+            theFile.close();
+            pros::lcd::set_text(1, "Recording stopped.");
+        } else {
+            isRecording = true;
+            theFile.open(fileName, std::ios::out);
+            pros::lcd::set_text(1, "Recording started!");
+        }
+    }
 
-    if(true){
+    recordButtonLastState = recordButtonPressed;
+
+    if (isRecording) {
         logMotorStates(values);
     }
-}
-
-void openFile(){
-    theFile.open(fileName, std::ios::out);
-}
-
-void closeFile() {
-    theFile.close();
 }
 
 vector<int> updateFrame() {
