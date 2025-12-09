@@ -30,10 +30,10 @@ void drive(){
 
 void drive_replay(){
 	vector<int> values = updateFrame();
-	right_front.move(values[0]);
-	right_back.move(values[1]);
-	left_front.move(values[2]);
-	left_back.move(values[3]);
+	right_front.move_voltage(values[0]);
+	right_back.move_voltage(values[1]);
+	left_front.move_voltage(values[2]);
+	left_back.move_voltage(values[3]);
 }
 
 void initialize() {

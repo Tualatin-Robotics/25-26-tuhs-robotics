@@ -2,7 +2,7 @@
 #include <vector>
 fstream theFile;
 
-string fileName = "/usd/TEST_01.txt";
+string fileName = "/usd/TEST_02.txt";
 bool recordButtonPressed = false;
 bool isRecording = false;
 
@@ -68,13 +68,13 @@ vector<int> updateFrame() {
     int bl;
     int br;
     char comma;
-    theFile >> fl;
-    theFile >> comma;
     theFile >> fr;
     theFile >> comma;
-    theFile >> bl;
-    theFile >> comma;
     theFile >> br;
+    theFile >> comma;
+    theFile >> fl;
+    theFile >> comma;
+    theFile >> bl;
     theFile >> comma;
     return vector<int>{fr, br, fl, bl};
 }
