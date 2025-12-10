@@ -10,7 +10,7 @@ bool isRecording = false;
 int frame = 0;
 
 
-void logMotorStates(vector<int> values){
+void logMotorStates(vector<double> values){
 
     for(int i = 0; i < values.size(); i++){
         theFile << values[i] << " , ";
@@ -20,7 +20,7 @@ void logMotorStates(vector<int> values){
 
 
 
-void record(pros::Controller master, vector<int> values){
+void record(pros::Controller master, vector<double> values){
     recordButtonPressed = (
         master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) &&
         master.get_digital(pros::E_CONTROLLER_DIGITAL_UP) &&
@@ -47,12 +47,12 @@ void record(pros::Controller master, vector<int> values){
     }
 }
 
-vector<int> updateFrame() {
+vector<double> updateFrame() {
     frame++;
-    int fl;
-    int fr;
-    int bl;
-    int br;
+    double fl;
+    double fr;
+    double bl;
+    double br;
     char comma;
     theFile >> fr;
     theFile >> comma;
@@ -62,5 +62,5 @@ vector<int> updateFrame() {
     theFile >> comma;
     theFile >> bl;
     theFile >> comma;
-    return vector<int>{fr, br, fl, bl};
+    return vector<double>{fr, br, fl, bl};
 }

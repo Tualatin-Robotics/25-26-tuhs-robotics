@@ -27,16 +27,22 @@ void drive(){
 }
 
 void drive_replay(){
-	vector<int> values = updateFrame();
-	right_front.move_voltage(values[0]);
-	right_back.move_voltage(values[1]);
-	left_front.move_voltage(values[2]);
-	left_back.move_voltage(values[3]);
+	vector<double> values = updateFrame();
+	right_front.move_relative(values[0], 120);
+	right_back.move_relative(values[1], 120);
+	left_front.move_relative(values[2], 120);
+	left_back.move_relative(values[3], 120);
 }
 
 void initialize() {
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello PROS User!");
+
+	right_front.set_encoder_units(pros::motor_encoder_units_e::E_MOTOR_ENCODER_DEGREES);
+	right_back.set_encoder_units(pros::motor_encoder_units_e::E_MOTOR_ENCODER_DEGREES);
+	left_front.set_encoder_units(pros::motor_encoder_units_e::E_MOTOR_ENCODER_DEGREES);
+	left_back.set_encoder_units(pros::motor_encoder_units_e::E_MOTOR_ENCODER_DEGREES);
+
 }
 
 void disabled() {}
@@ -57,11 +63,17 @@ void opcontrol() {
 	pros::lcd::set_text(1, "Opcontrol started! Go Wolves!");
 
 	while (true) {
-		vector<int> values = {
+		/*vector<int> values = {
 			right_front.get_voltage(),
 			right_back.get_voltage(),
 			left_front.get_voltage(),
 			left_back.get_voltage()
+		};*/
+		vector<double> values = {
+			right_front.get_position(),
+			right_back.get_position(),
+			left_front.get_position(),
+			left_back.get_position()
 		};
 		drive();
 		record(master, values);
