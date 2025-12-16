@@ -34,6 +34,7 @@ void record(pros::Controller master, vector<double> values){
             theFile.close();
             pros::lcd::set_text(1, "Recording stopped.");
         } else {
+            reset_drivetrain_pos();
             isRecording = true;
             theFile.open(fileName, std::ios::out);
             pros::lcd::set_text(1, "Recording started!");
@@ -53,6 +54,8 @@ vector<double> updateFrame() {
     double fr;
     double bl;
     double br;
+    double lpos;
+    double rpos;
     char comma;
     theFile >> fr;
     theFile >> comma;
@@ -62,5 +65,9 @@ vector<double> updateFrame() {
     theFile >> comma;
     theFile >> bl;
     theFile >> comma;
-    return vector<double>{fr, br, fl, bl};
+    theFile >> rpos;
+    theFile >> comma;
+    theFile >> lpos;
+    theFile >> comma;
+    return vector<double>{fr, br, fl, bl, rpos, lpos};
 }
