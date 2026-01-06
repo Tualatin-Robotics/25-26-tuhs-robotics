@@ -40,6 +40,11 @@ void reset_drivetrain_pos() {
 	right_back.tare_position();
 	left_front.tare_position();
 	left_back.tare_position();
+	right_middle.tare_position();
+	left_middle.tare_position();
+	bottom.tare_position();
+	top.tare_position();
+	middle.tare_position();
 }
 
 #include "replay.h"
@@ -121,6 +126,11 @@ void drive_replay(){
 	right_back.move_voltage(int(values[1]));
 	left_front.move_voltage(int(values[2]));
 	left_back.move_voltage(int(values[3]));
+	right_middle.move_voltage(int(values[4]));
+	left_middle.move_voltage(int(values[5]));
+	top.move_voltage(int(values[6]));
+	middle.move_voltage(int(values[7]));
+	bottom.move_voltage(int(values[8]));
 }
 
 void opcontrol() {
@@ -132,6 +142,11 @@ void opcontrol() {
 			(double)right_back.get_voltage(),
 			(double)left_front.get_voltage(),
 			(double)left_back.get_voltage(),
+			(double)right_middle.get_voltage(),
+			(double)left_middle.get_voltage(),
+			(double)top.get_voltage(),
+			(double)middle.get_voltage(),
+			(double)bottom.get_voltage(),
 			right_front.get_position(),
 			left_front.get_position()
 		});
