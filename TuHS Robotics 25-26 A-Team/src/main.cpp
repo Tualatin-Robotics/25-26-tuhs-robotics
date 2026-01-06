@@ -1,11 +1,10 @@
 #include "stuff.h"
 #include "main.h"
-#include "replay.h"
 
-string REPLAY_FILE = "/usd/a_team_auton_25_26.txt";
+//string REPLAY_FILE = "/usd/a_team_auton_25_26.txt";
 
 pros::Controller playerController(pros::E_CONTROLLER_MASTER);
-ReplayController replayController(REPLAY_FILE);
+//ReplayController replayController(REPLAY_FILE);
 
 // Lift motors
 float LIFT_MAX_SPEED = 127;
@@ -36,6 +35,14 @@ void initialize() {
 	pros::lcd::set_text(6, "Hath all too short a date.");
 }
 
+void reset_drivetrain_pos() {
+	right_front.tare_position();
+	right_back.tare_position();
+	left_front.tare_position();
+	left_back.tare_position();
+}
+
+#include "replay.h"
 
 void disabled() {}
 
@@ -107,24 +114,40 @@ void drive(auto master){
 	left_back.move(left_speed);
 }
 
+void drive_replay(){
+	vector<double> values = updateFrame();
+
+	right_front.move_voltage(int(values[0]));
+	right_back.move_voltage(int(values[1]));
+	left_front.move_voltage(int(values[2]));
+	left_back.move_voltage(int(values[3]));
+}
+
 void opcontrol() {
 	while (true) {
 		drive(playerController);
 		
-		replayController.record(playerController, theFile);
-		//pros::delay(20);
-		pros::delay(20 - pros::millis() % 20);
+		record(playerController, vector<double>{
+			(double)right_front.get_voltage(),
+			(double)right_back.get_voltage(),
+			(double)left_front.get_voltage(),
+			(double)left_back.get_voltage(),
+			right_front.get_position(),
+			left_front.get_position()
+		});
+		pros::delay(20);
+		//pros::delay(20 - pros::millis() % 20);
 	}
 	theFile.close();
 }
 
 void autonomous() {
-	theFile.open(REPLAY_FILE, std::ios_base::in);
+	theFile.open(fileName, std::ios_base::in);
 	while(true) {
-		replayController.updateFrame(false);
-		drive(replayController);
-		//pros::delay(20);
-		pros::delay(20 - pros::millis() % 20);
+		updateFrame();
+		drive_replay();
+		pros::delay(20);
+		//pros::delay(20 - pros::millis() % 20);
 	}
 	theFile.close();
 }
