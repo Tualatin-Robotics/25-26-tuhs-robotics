@@ -50,14 +50,14 @@ void drive_replay(){
 
 	//printf("%f\n", values[0]);
 
-	/*double left = values[2];
+	double left = values[2];
 	double right = values[0];
 
 	double right_offset = values[4] - right_front.get_position();
 	double left_offset = values[5] - left_front.get_position();
 
-	right += right_offset * 2.0;
-	left += left_offset * 2.0;*/
+	right += right_offset * 2.0 * 0.;
+	left += left_offset * 2.0 * 0.;
 
 	right_front.move_voltage(int(right));
 	right_back.move_voltage(int(right));
@@ -81,6 +81,26 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
+	reset_drivetrain_pos();
+	int32_t rpm = 60;
+	double diameter_b = 4;
+	double diameter_s = 2.75;
+	double circ_b = 12.56637;
+	double gr_b = 84.0 / 36.0;
+	//float gr_s 32:1 and 48:1
+	right_front.move_absolute(360 * gr_b, rpm);
+	left_front.move_absolute(-360 * gr_b, rpm);
+	right_back.move_absolute(360 * gr_b, rpm);
+	left_back.move_absolute(-360 * gr_b, rpm);
+
+	pros::delay(1000 * 2);
+
+	right_front.move_absolute(360 * gr_b, rpm);
+	left_front.move_absolute(360 * gr_b, rpm);
+	right_back.move_absolute(360 * gr_b, rpm);
+	left_back.move_absolute(360 * gr_b, rpm);
+
+	return;
 	reset_drivetrain_pos();
 	theFile.open(fileName, std::ios::in);
 	pros::lcd::set_text(1, "Auton started!");
