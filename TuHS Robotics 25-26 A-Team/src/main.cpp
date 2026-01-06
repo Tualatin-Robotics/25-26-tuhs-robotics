@@ -42,7 +42,7 @@ void drive(){
 
 void drive_replay(){
 	vector<double> values = updateFrame();
-	int s = 200;
+	//int s = 200;
 	/*right_front.move_absolute(values[0], s);
 	right_back.move_absolute(values[1], s);
 	left_front.move_absolute(values[2], s);
@@ -50,14 +50,14 @@ void drive_replay(){
 
 	//printf("%f\n", values[0]);
 
-	double left = values[2];
+	/*double left = values[2];
 	double right = values[0];
 
 	double right_offset = values[4] - right_front.get_position();
 	double left_offset = values[5] - left_front.get_position();
 
 	right += right_offset * 2.0;
-	left += left_offset * 2.0;
+	left += left_offset * 2.0;*/
 
 	right_front.move_voltage(int(right));
 	right_back.move_voltage(int(right));
