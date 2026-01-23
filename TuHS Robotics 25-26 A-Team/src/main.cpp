@@ -126,11 +126,11 @@ void drive_replay(){
 	right_back.move_voltage(int(values[1]));
 	left_front.move_voltage(int(values[2]));
 	left_back.move_voltage(int(values[3]));
-	right_middle.move_voltage(int(values[4]));
-	left_middle.move_voltage(int(values[5]));
-	top.move_voltage(int(values[6]));
-	middle.move_voltage(int(values[7]));
-	bottom.move_voltage(int(values[8]));
+	right_middle.move_voltage(int(values[6]));
+	left_middle.move_voltage(int(values[7]));
+	top.move_voltage(int(values[8]));
+	middle.move_voltage(int(values[9]));
+	bottom.move_voltage(int(values[10]));
 }
 
 void opcontrol() {
