@@ -21,8 +21,12 @@ pros::Motor left_front(3);
 pros::Motor left_middle(4);
 pros::Motor left_back(5);
 
+//Pneumatics
+pros::ADIDigitalOut extender('A');
+
 int direction = 1;
 bool backwardsPressed = false;
+bool pneumatics_extended = false;
 
 
 void initialize() {
@@ -55,7 +59,7 @@ void disabled() {}
 void competition_initialize() {}
 
 
-void drive(auto master){
+void drive(pros::Controller master){
 	bool l1 = master.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
 	bool l2 = master.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
 	bool r1 = master.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
@@ -86,8 +90,6 @@ void drive(auto master){
 		middle.move(0);
 		top.move(0);
 	}
-
-	
 	
 	if(backwardsPressed != master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
 		backwardsPressed = master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
@@ -117,10 +119,19 @@ void drive(auto master){
 	left_front.move(left_speed);
 	left_middle.move(left_speed);
 	left_back.move(left_speed);
+
+	//Pneumatic code
+	bool y_just_pressed = master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y);
+	if (y_just_pressed) {
+		pneumatics_extended = !pneumatics_extended;
+		extender.set_value(pneumatics_extended);
+	}
 }
 
 void drive_replay(){
 	vector<double> values = updateFrame();
+
+	//Indecies 4 and 5 are position data
 
 	right_front.move_voltage(int(values[0]));
 	right_back.move_voltage(int(values[1]));

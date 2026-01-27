@@ -4,14 +4,15 @@
       "name": "PROS Project",
       "includePath": [
         "${workspaceFolder}/**",
-        "/Users/benjamin/Documents/GitHub/25-26-tuhs-robotics/TuHS Robotics 25-26 A-Team/include"
+        "/Users/benjamin/Documents/GitHub/25-26-tuhs-robotics/TuHS Robotics 25-26 A-Team/include",
+        "/home/kol/Documents/Vex Robotics/2026/25-26-tuhs-robotics/TuHS Robotics 25-26 A-Team/include"
       ],
       "defines": [
         "_DEBUG",
         "UNICODE",
         "_UNICODE"
       ],
-      "compilerPath": "/Users/benjamin/Library/Application Support/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-macos/bin/arm-none-eabi-g++",
+      "compilerPath": "/home/kol/.config/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-linux/bin/arm-none-eabi-g++",
       "cStandard": "gnu11",
       "cppStandard": "gnu++20",
       "intelliSenseMode": "gcc-arm",
@@ -20,7 +21,7 @@
       ],
       "browse": {
         "path": [
-          "/Users/benjamin/Documents/GitHub/25-26-tuhs-robotics/TuHS Robotics 25-26 A-Team"
+          "/home/kol/Documents/Vex Robotics/2026/25-26-tuhs-robotics/TuHS Robotics 25-26 A-Team"
         ],
         "limitSymbolsToIncludedHeaders": true,
         "databaseFilename": ""
