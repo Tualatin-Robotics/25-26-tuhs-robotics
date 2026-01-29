@@ -61,6 +61,7 @@ vector<double> updateFrame() {
     double top;
     double bot;
     double mid;
+    double deploy;
     char comma;
     theFile >> fr;
     theFile >> comma;
@@ -84,5 +85,7 @@ vector<double> updateFrame() {
     theFile >> comma;
     theFile >> bot;
     theFile >> comma;
-    return vector<double>{fr, br, fl, bl, rpos, lpos, rm, lm, top, mid, bot};
+    theFile >> deploy;
+    theFile >> comma;
+    return vector<double>{fr, br, fl, bl, rpos, lpos, rm, lm, top, mid, bot, deploy};
 }
