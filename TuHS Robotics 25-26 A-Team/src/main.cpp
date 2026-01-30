@@ -191,7 +191,7 @@ void autonomous()
 	while (true)
 	{
 		drive_replay();
-		pros::delay(22);
+		pros::delay(20);
 		// pros::delay(20 - pros::millis() % 20);
 	}
 	theFile.close();
