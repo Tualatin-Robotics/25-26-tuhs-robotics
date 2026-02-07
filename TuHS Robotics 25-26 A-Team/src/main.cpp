@@ -185,8 +185,82 @@ void opcontrol()
 	theFile.close();
 }
 
+void move(double distance, int32_t rpm = 30) {
+	double revolutions = distance / 7.87402;
+	double gr_b = 48.0 / 36.0;
+	gr_b = 36.0 / 48.0;
+	gr_b *= 1.36;
+	right_front.move_relative(revolutions * 360 * gr_b, rpm);
+	left_front.move_relative(revolutions * -360 * gr_b, rpm);
+	left_middle.move_relative(revolutions * -360 * gr_b, rpm);
+	right_back.move_relative(revolutions * 360 * gr_b, rpm);
+	left_back.move_relative(revolutions * -360 * gr_b, rpm);
+	right_middle.move_relative(revolutions * 360 * gr_b, rpm);
+}
+
+void rotate_right(double revolutions) {
+	double gr_b = 48.0 / 36.0;
+	double rpm = 30;
+	right_front.move_relative(revolutions * -360 * gr_b, rpm);
+	left_front.move_relative(revolutions * -360 * gr_b, rpm);
+	left_middle.move_relative(revolutions * -360 * gr_b, rpm);
+	right_back.move_relative(revolutions * -360 * gr_b, rpm);
+	left_back.move_relative(revolutions * -360 * gr_b, rpm);
+	right_middle.move_relative(revolutions * -360 * gr_b, rpm);
+}
+
 void autonomous()
 {
+//TESTING AUTON
+	reset_drivetrain_pos();
+	int32_t rpm = 10;
+	double diameter_b = 4;
+	double diameter_s = 2.75;
+	double circ_b = 12.56637;
+	double drivetrain_gr = 48.0 / 36.0;
+	double dt_wheel_cir = 7.87402;
+	double gr_b = drivetrain_gr;
+	//float gr_s 32:1 and 48:1
+	/*right_front.move_absolute(360 * gr_b, rpm);
+	left_front.move_absolute(-360 * gr_b, rpm);
+	left_middle.move_absolute(-360 * gr_b, rpm);
+	right_back.move_absolute(360 * gr_b, rpm);
+	left_back.move_absolute(-360 * gr_b, rpm);
+	right_middle.move_absolute(360 * gr_b, rpm);*/
+	move(12.0 * 2.0);
+	pros::delay(1000 * 2.5);
+	rotate_right(0.22);
+	pros::delay(1000);
+	 bottom.move(LIFT_MAX_SPEED); 
+		middle.move(LIFT_MAX_SPEED * 0.5);
+		top.move(LIFT_MAX_SPEED * 0.5);
+	move(12.0 * 2.0, 20);
+	pros::delay(1000 * 4.5);
+	move(12.0 * -0.5);
+	pros::delay(1000 * 1);
+	bottom.move(LIFT_MAX_SPEED * 0); 
+		middle.move(LIFT_MAX_SPEED * 0);
+		top.move(LIFT_MAX_SPEED * 0);
+	rotate_right(-0.7);
+		pros::delay(1000 * 1);
+	move(10.0);
+			pros::delay(1000 * 1.5);
+bottom.move(-LIFT_MAX_SPEED);
+		deploy.move(LIFT_MAX_SPEED * 0.5);
+		top.move(0);
+	/*right_front.move_absolute(0 * gr_b, rpm);
+	left_front.move_absolute(0 * gr_b, rpm);
+	right_back.move_absolute(0 * gr_b, rpm);
+	left_back.move_absolute(0 * gr_b, rpm);
+	right_middle.move_absolute(0 * gr_b, rpm);
+	left_middle.move_absolute(0 * gr_b, rpm);*/
+
+// 	bottom.move(-LIFT_MAX_SPEED);
+// 		middle.move(-LIFT_MAX_SPEED * 0.5);
+// 		top.move(0);
+
+	return;
+//END OF TESTING AUTON
 	theFile.open(fileName, std::ios_base::in);
 	while (true)
 	{
