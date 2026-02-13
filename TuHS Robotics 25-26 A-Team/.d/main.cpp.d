@@ -665,7 +665,7 @@ bin/main.cpp.o: src/main.cpp src/stuff.h include/main.h include/api.h \
  include/pros/motors.hpp include/pros/optical.hpp include/pros/optical.h \
  include/pros/rotation.hpp include/pros/rotation.h include/pros/rtos.hpp \
  include/pros/screen.hpp include/pros/screen.h include/pros/vision.hpp \
- include/pros/vision.h src/replay.h
+ include/pros/vision.h src/replay.h src/auton-manager.h
 src/stuff.h:
 include/main.h:
 include/api.h:
@@ -1406,3 +1406,4 @@ include/pros/screen.h:
 include/pros/vision.hpp:
 include/pros/vision.h:
 src/replay.h:
+src/auton-manager.h:

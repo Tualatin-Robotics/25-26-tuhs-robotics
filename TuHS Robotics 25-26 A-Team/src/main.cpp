@@ -223,12 +223,12 @@ void right_side_auton() {
 	move(12.0 * 2.0);
 	pros::delay(1000 * 2.5);
 	rotate_right(0.22);
-	pros::delay(1000);
+	pros::delay(1000 * 0.7);
 	bottom.move(LIFT_MAX_SPEED); 
 	middle.move(LIFT_MAX_SPEED * 0.5);
 	top.move(LIFT_MAX_SPEED * 0.5);
 	move(12.0 * 2.0, 20);
-	pros::delay(1000 * 4.5);
+	pros::delay(1000 * 4.2);
 	move(12.0 * -0.5);
 	pros::delay(1000 * 1);
 	bottom.move(LIFT_MAX_SPEED * 0); 
@@ -241,6 +241,8 @@ void right_side_auton() {
 	bottom.move(-LIFT_MAX_SPEED);
 	deploy.move(LIFT_MAX_SPEED * 0.5);
 	top.move(0);
+	pros::delay(1000 * 3);
+	deploy.move(0);
 }
 
 void left_side_auton() {
@@ -248,25 +250,26 @@ void left_side_auton() {
 	int32_t rpm = 10;
 	move(12.0 * 2.0);
 	pros::delay(1000 * 2.5);
-	rotate_right(-0.22);
-	pros::delay(1000);
+	rotate_right(-0.2);
+	pros::delay(1000 * 0.7);
 	bottom.move(LIFT_MAX_SPEED); 
 	middle.move(LIFT_MAX_SPEED * 0.5);
 	top.move(LIFT_MAX_SPEED * 0.5);
 	move(12.0 * 2.0, 20);
-	pros::delay(1000 * 4.5);
+	pros::delay(1000 * 4.2);
 	move(12.0 * -0.5);
 	pros::delay(1000 * 1);
 	bottom.move(LIFT_MAX_SPEED * 0); 
 	middle.move(LIFT_MAX_SPEED * 0);
 	top.move(LIFT_MAX_SPEED * 0);
-	rotate_right(0.7);
+	rotate_right(0.68);
 	pros::delay(1000 * 1);
 	move(10.0);
 	pros::delay(1000 * 1.5);
 	bottom.move(LIFT_MAX_SPEED);
 	middle.move(LIFT_MAX_SPEED * -0.5);
 	top.move(0);
+	deploy.move(LIFT_MAX_SPEED * 0.5);
 }
 
 void autonomous()
