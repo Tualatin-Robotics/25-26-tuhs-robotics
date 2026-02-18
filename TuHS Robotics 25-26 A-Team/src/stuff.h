@@ -7,6 +7,7 @@
 #include <cstring>
 #include <filesystem>
 #include <cstdio>
+#include <time.h>
 using namespace std;
 
 // The single, solitary variable that we defined in this file:

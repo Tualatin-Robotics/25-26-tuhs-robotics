@@ -29,6 +29,8 @@ int direction = 1;
 bool backwardsPressed = false;
 bool pneumatics_extended = false;
 
+int frame_count = 0;
+
 void initialize()
 {
 	pros::lcd::initialize();
@@ -162,6 +164,12 @@ void drive_replay()
 }
 
 void check_for_auton_change(pros::Controller master) {
+	//pros::lcd::set_text(1, asctime(&start);
+	//pros::lcd::set_text(2, "AWAITING USER INPUT...");
+	//Check if we are under 10 seconds
+	if (frame_count > (1000 / 20) * 10) {
+		return;
+	}
 	if (
 		master.get_digital(pros::E_CONTROLLER_DIGITAL_A) &&
 		master.get_digital(pros::E_CONTROLLER_DIGITAL_B) &&
@@ -174,6 +182,19 @@ void check_for_auton_change(pros::Controller master) {
 	) {
 		pros::lcd::set_text(1, "SETTING AUTON");
 		pros::lcd::set_text(2, "AWAITING USER INPUT...");
+		//Stop all motors
+		right_front.move_voltage(0);
+		right_back.move_voltage(0);
+		left_front.move_voltage(0);
+		left_back.move_voltage(0);
+		right_middle.move_voltage(0);
+		left_middle.move_voltage(0);
+		top.move_voltage(0);
+		middle.move_voltage(0);
+		bottom.move_voltage(0);
+		deploy.move_voltage(0);
+
+		//Enter into a special auton selection mode
 		while (true) {
 			if (master.get_digital_new_release(pros::E_CONTROLLER_DIGITAL_LEFT)) {
 				set_autonomous_mode(LEFT_SIDE);
@@ -185,6 +206,7 @@ void check_for_auton_change(pros::Controller master) {
 				set_autonomous_mode(REPLAY);
 				return;
 			}
+			frame_count += 1;
 			pros::delay(20);
 		}
 	}
@@ -211,6 +233,8 @@ void opcontrol()
 			(double)middle.get_voltage(),
 			(double)bottom.get_voltage(),
 			(double)deploy.get_voltage()});
+
+		frame_count += 1;
 		pros::delay(20);
 		// pros::delay(20 - pros::millis() % 20);
 	}
