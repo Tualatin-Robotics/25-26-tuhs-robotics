@@ -161,11 +161,42 @@ void drive_replay()
 	deploy.move_voltage(int(values[11]));
 }
 
+void check_for_auton_change(pros::Controller master) {
+	if (
+		master.get_digital(pros::E_CONTROLLER_DIGITAL_A) &&
+		master.get_digital(pros::E_CONTROLLER_DIGITAL_B) &&
+		master.get_digital(pros::E_CONTROLLER_DIGITAL_Y) && 
+		master.get_digital(pros::E_CONTROLLER_DIGITAL_X) &&
+		master.get_digital(pros::E_CONTROLLER_DIGITAL_R2) &&
+		master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) && 
+		master.get_digital(pros::E_CONTROLLER_DIGITAL_L1) &&
+		master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)
+	) {
+		pros::lcd::set_text(1, "SETTING AUTON");
+		pros::lcd::set_text(2, "AWAITING USER INPUT...");
+		while (true) {
+			if (master.get_digital_new_release(pros::E_CONTROLLER_DIGITAL_LEFT)) {
+				set_autonomous_mode(LEFT_SIDE);
+				return;
+			} else if (master.get_digital_new_release(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
+				set_autonomous_mode(RIGHT_SIDE);
+				return;
+			} else if (master.get_digital_new_release(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+				set_autonomous_mode(REPLAY);
+				return;
+			}
+			pros::delay(20);
+		}
+	}
+}
+
 void opcontrol()
 {
 	while (true)
 	{
 		drive(playerController);
+
+		check_for_auton_change(playerController);
 
 		record(playerController, vector<double>{
 			(double)right_front.get_voltage(),

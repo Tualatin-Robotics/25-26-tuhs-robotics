@@ -26,8 +26,8 @@ enum MODE {
 
 void set_autonomous_mode(MODE mode) {
     fstream flag_file;
-    flag_file.open(auton_flag_filename, std::ios_base::in);
-    if (mode == REPLAY) {
+    flag_file.open(auton_flag_filename, std::ios_base::out);
+    /*if (mode == REPLAY) {
         //Set flag for replay
     } else if (mode == RIGHT_SIDE) {
         //Set flag for right side auton
@@ -35,10 +35,37 @@ void set_autonomous_mode(MODE mode) {
         //Set flag for left side auton
     } else {
         pros::lcd::set_text(1, "ERROR: NO AUTON MODE RECOGNIZED");
+    }*/
+   flag_file << (int)mode;
+   pros::lcd::set_text(1, "SET AUTON MODE TO:");
+    if (mode == REPLAY) {
+        pros::lcd::set_text(2, "REPLAY");
+    } else if (mode == RIGHT_SIDE) {
+        pros::lcd::set_text(2, "RIGHT SIDE");
+    } else if (mode == LEFT_SIDE) {
+        pros::lcd::set_text(2, "LEFT SIDE");
+    } else {
+        pros::lcd::set_text(2, "ERROR: AUTON MODE NOT RECOGNIZED");
     }
     flag_file.close();
 }
 
 MODE get_autonomous_mode() {
-    return LEFT_SIDE;
+    fstream flag_file;
+    flag_file.open(auton_flag_filename, std::ios_base::in);
+    int current_mode;
+    flag_file >> current_mode;
+    MODE mode = (MODE)current_mode;
+    pros::lcd::set_text(1, "CURRENT AUTON MODE IS:");
+    if (mode == REPLAY) {
+        pros::lcd::set_text(2, "REPLAY");
+    } else if (mode == RIGHT_SIDE) {
+        pros::lcd::set_text(2, "RIGHT SIDE");
+    } else if (mode == LEFT_SIDE) {
+        pros::lcd::set_text(2, "LEFT SIDE");
+    } else {
+        pros::lcd::set_text(2, "ERROR: AUTON MODE NOT RECOGNIZED");
+    }
+    flag_file.close();
+    return mode;
 }
