@@ -214,6 +214,10 @@ void check_for_auton_change(pros::Controller master) {
 
 void opcontrol()
 {
+
+	// pros::Motor s(10);
+	// s.move_voltage(6.5 * MOVE_VOLT);
+	// return;
 	while (true)
 	{
 		drive(playerController);
@@ -286,9 +290,9 @@ void right_side_auton() {
 	pros::delay(1000 * 4.2);
 	move(12.0 * -0.5);
 	pros::delay(1000 * 1);
-	bottom.move(LIFT_MAX_SPEED * 0); 
-	middle.move(LIFT_MAX_SPEED * 0);
-	top.move(LIFT_MAX_SPEED * 0);
+	// bottom.move(LIFT_MAX_SPEED * 0); 
+	// middle.move(LIFT_MAX_SPEED * 0);
+	// top.move(LIFT_MAX_SPEED * 0);
 	rotate_right(-0.7);
 	pros::delay(1000 * 1);
 	move(10.0);
@@ -303,23 +307,32 @@ void right_side_auton() {
 void left_side_auton() {
 	reset_drivetrain_pos();
 	int32_t rpm = 10;
-	move(12.0 * 2.0);
-	pros::delay(1000 * 2.5);
-	rotate_right(-0.2);
+	move(12.0 * 2.2);
+	pros::delay(1000 * 2.8);
+	rotate_right(-0.21);
 	pros::delay(1000 * 0.7);
 	bottom.move(LIFT_MAX_SPEED); 
 	middle.move(LIFT_MAX_SPEED * 0.5);
 	top.move(LIFT_MAX_SPEED * 0.5);
-	move(12.0 * 2.0, 20);
-	pros::delay(1000 * 4.2);
-	move(12.0 * -0.5);
+	move(12.0 * 1.7, 16);
+	pros::delay(1000 * 3.3);
+
+	
+	deploy.move(LIFT_MAX_SPEED * -0.5);
+	pros::delay(1000 * 1.0);
+	
+	bottom.move(LIFT_MAX_SPEED); 
+	middle.move(LIFT_MAX_SPEED * 0.5);
+	top.move(LIFT_MAX_SPEED * 0.5);
+	
+	move(12.0 * -0.3);
 	pros::delay(1000 * 1);
 	bottom.move(LIFT_MAX_SPEED * 0); 
 	middle.move(LIFT_MAX_SPEED * 0);
 	top.move(LIFT_MAX_SPEED * 0);
-	rotate_right(0.68);
+	rotate_right(0.75);
 	pros::delay(1000 * 1);
-	move(10.0);
+	move(9.8);
 	pros::delay(1000 * 1.5);
 	bottom.move(LIFT_MAX_SPEED);
 	middle.move(LIFT_MAX_SPEED * -0.5);
