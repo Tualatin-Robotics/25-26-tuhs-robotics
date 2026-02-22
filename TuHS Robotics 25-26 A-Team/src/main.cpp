@@ -214,10 +214,6 @@ void check_for_auton_change(pros::Controller master) {
 
 void opcontrol()
 {
-
-	// pros::Motor s(10);
-	// s.move_voltage(6.5 * MOVE_VOLT);
-	// return;
 	while (true)
 	{
 		drive(playerController);
@@ -240,7 +236,6 @@ void opcontrol()
 
 		frame_count += 1;
 		pros::delay(20);
-		// pros::delay(20 - pros::millis() % 20);
 	}
 	theFile.close();
 }
@@ -290,9 +285,6 @@ void right_side_auton() {
 	pros::delay(1000 * 4.2);
 	move(12.0 * -0.5);
 	pros::delay(1000 * 1);
-	// bottom.move(LIFT_MAX_SPEED * 0); 
-	// middle.move(LIFT_MAX_SPEED * 0);
-	// top.move(LIFT_MAX_SPEED * 0);
 	rotate_right(-0.7);
 	pros::delay(1000 * 1);
 	move(10.0);
@@ -360,7 +352,6 @@ void autonomous()
 	{
 		drive_replay();
 		pros::delay(20);
-		// pros::delay(20 - pros::millis() % 20);
 	}
 	theFile.close();
 }
