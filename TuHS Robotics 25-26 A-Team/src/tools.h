@@ -8,6 +8,7 @@
 #include <filesystem>
 #include <cstdio>
 #include <time.h>
+#include "main.h"
 using namespace std;
 
 // The single, solitary variable that we defined in this file:
