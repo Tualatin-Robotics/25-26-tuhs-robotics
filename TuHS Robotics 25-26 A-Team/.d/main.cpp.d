@@ -1,4 +1,4 @@
-bin/main.cpp.o: src/main.cpp src/stuff.h include/main.h include/api.h \
+bin/main.cpp.o: src/main.cpp src/tools.h include/main.h include/api.h \
  include/pros/adi.h include/pros/ai_vision.h include/pros/colors.h \
  include/pros/device.h include/pros/distance.h include/pros/error.h \
  include/pros/ext_adi.h include/pros/adi.h include/pros/adi.h \
@@ -665,8 +665,9 @@ bin/main.cpp.o: src/main.cpp src/stuff.h include/main.h include/api.h \
  include/pros/motors.hpp include/pros/optical.hpp include/pros/optical.h \
  include/pros/rotation.hpp include/pros/rotation.h include/pros/rtos.hpp \
  include/pros/screen.hpp include/pros/screen.h include/pros/vision.hpp \
- include/pros/vision.h src/replay.h src/auton-manager.h
-src/stuff.h:
+ include/pros/vision.h src/motors.h src/autons.h src/replay.h \
+ src/auton-manager.h
+src/tools.h:
 include/main.h:
 include/api.h:
 include/pros/adi.h:
@@ -1405,5 +1406,7 @@ include/pros/screen.hpp:
 include/pros/screen.h:
 include/pros/vision.hpp:
 include/pros/vision.h:
+src/motors.h:
+src/autons.h:
 src/replay.h:
 src/auton-manager.h:
